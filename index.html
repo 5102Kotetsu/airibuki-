@@ -2,37 +2,12 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>エアイブキ見積もり</title>
+  <base target="_top">
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
-    body { 
-      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif; 
-      background-color: #f4f7f6; 
-      color: #333; 
-      margin: 0; 
-      padding: 10px; 
-      line-height: 1.6;
-      -webkit-text-size-adjust: 100%;
-    }
-    .container { 
-      max-width: 500px; 
-      margin: 0 auto; 
-      background: #fff; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 24px rgba(0,0,0,0.05); 
-      padding: 20px; 
-      box-sizing: border-box; 
-    }
-    .title { 
-      color: #2ecc71; 
-      text-align: center; 
-      font-size: 1.4rem; 
-      margin-bottom: 24px; 
-      border-bottom: 3px solid #f0fdf4; 
-      padding-bottom: 12px; 
-      font-weight: bold; 
-    }
+    body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 10px; line-height: 1.6; -webkit-text-size-adjust: 100%; }
+    .container { max-width: 500px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); padding: 20px; box-sizing: border-box; }
+    .title { color: #2ecc71; text-align: center; font-size: 1.4rem; margin-bottom: 24px; border-bottom: 3px solid #f0fdf4; padding-bottom: 12px; font-weight: bold; }
     .ac-item { border: 2px solid #edf2f7; border-radius: 12px; padding: 18px; margin-bottom: 20px; background: #ffffff; }
     .ac-header { font-weight: bold; color: #2ecc71; margin-bottom: 15px; display: block; font-size: 1.1rem; border-left: 5px solid #2ecc71; padding-left: 10px; }
     .input-label { display: block; font-weight: bold; font-size: 0.95rem; margin: 15px 0 8px 0; color: #2d3748; }
@@ -61,7 +36,7 @@
     .badge-popular-2 { background: #dd6b20; }
     .consult-text-group { padding: 0 12px 12px 12px; background: #ffffff; border: 1px solid #cbd5e0; border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; margin-top: -10px; transition: all 0.2s; }
     .consult-text { min-height: 60px; font-size: 0.9rem; background-color: #f8fafc; }
-    select, input[type="text"], input[type="tel"], input[type="file"], textarea { width: 100%; padding: 14px; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 1rem; background-color: #fff; appearance: none; -webkit-appearance: none; }
+    select, input[type="text"], input[type="tel"], input[type="file"], textarea { width: 100%; padding: 14px; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 1rem; background-color: #fff; appearance: none; -webkit-appearance: none; margin-bottom: 10px; }
     select { background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
     textarea { resize: vertical; min-height: 80px; }
     .btn-add { width: 100%; background: #fff; color: #2ecc71; border: 2px solid #2ecc71; padding: 14px; border-radius: 10px; font-weight: bold; margin: 15px 0; cursor: pointer; font-size: 1rem; }
@@ -93,16 +68,19 @@
     .date-input-row { display: flex; align-items: center; margin-bottom: 12px; }
     .date-input-label { width: 80px; font-weight: bold; font-size: 0.9rem; color: #2d3748; }
     .date-input-field { flex: 1; padding: 12px !important; }
+    .btn-photo-add { background: #dcfce7; color: #166534; border: 1px solid #86efac; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; width: 100%; display: block; text-align: center; margin-bottom: 15px; }
   </style>
 </head>
 <body>
   <div class="container">
+    
     <div id="step1">
       <h1 class="title">エアイブキ かんたん見積もり</h1>
       <div id="ac-list">
         <div class="ac-item" id="ac-block-1">
           <span class="ac-header">エアコン 1台目</span>
           <label class="input-label">エアコンのタイプ</label>
+          
           <div class="plan-images">
             <div class="plan-card selected" id="card-normal-1" onclick="selectType(1,'normal')">
               <img src="https://i.imgur.com/rnfPxwk.jpg" alt="通常タイプ">
@@ -113,12 +91,14 @@
               <small>お掃除機能付き<br>21,500円</small>
             </div>
           </div>
+          
           <select class="type-sel" id="sel-type-1" onchange="syncUI(1, this.value)" style="margin-top: 10px;">
             <option value="normal">通常タイプ 14,500円</option>
             <option value="cleaning">お掃除機能付き 21,500円</option>
             <option value="unknown">わからない</option>
           </select>
           <p style="color:#e53e3e; font-size: 0.85rem; font-weight: bold; margin-top: 8px;">※わからない場合は 通常タイプのエアコンで料金計算されます</p>
+
           <div class="info-box" style="margin-top: 15px;">
             <strong>💡 お掃除機能の判別方法：</strong>
             <ul style="margin: 8px 0 0 20px; padding: 0;">
@@ -127,6 +107,7 @@
               <li>フィルターが簡単に取れない（取れるのが通常タイプ）</li>
             </ul>
           </div>
+
           <div class="accordion-btn" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
             オプションメニューを追加する
           </div>
@@ -161,29 +142,35 @@
     <div id="step3" class="hidden">
       <h1 class="title">お客様情報の入力</h1>
       <div class="privacy-policy-box" style="font-size:0.85rem; color:#4a5568; margin-bottom:15px; background:#f7fafc; padding:10px; border-radius:8px;">入力いただいた情報は、お見積もりのご連絡のためだけに使います。営業目的のご連絡や第三者提供はありませんのでご安心ください。</div>
+      
       <div style="margin-bottom:18px;"><label class="input-label" style="margin-top:0;">お名前</label><input type="text" id="u_name" placeholder="例：新潟 太郎"></div>
       <div style="margin-bottom:18px;"><label class="input-label">電話番号</label><input type="tel" id="u_tel" placeholder="例：09012345678"></div>
       <div style="margin-bottom:25px;"><label class="input-label">ご住所</label><input type="text" id="u_addr" placeholder="例：新潟市中央区...〇〇マンション101"></div>
+      
       <div style="background:#f0fdf4; border:1px solid #c6f6d5; padding:15px; border-radius:10px; margin-bottom: 25px;">
         <h3 style="margin:0 0 8px 0; color:#166534; font-size:1.05rem;">作業の目安時間：約<span id="display_time" style="font-size:1.3rem;"></span>時間</h3>
         <p style="font-size:0.8rem; color:#4a5568; margin:0;">※設置状況や現場状況で前後する場合もございますので、その際は適宜報告させていただきます。</p>
       </div>
+
       <div style="margin-bottom:25px;">
         <label class="input-label" style="margin-top:0;">ご希望日時</label>
-        <p style="font-size:0.85rem; color:#4a5568; margin-top:0;">全日 9:00~20:00 ご自由に時間帯をご記入ください<br><span style="color:#718096; font-size:0.8rem;">記入例：1/1 午後1時以降、平日の昼過ぎ、休日の午前以外</span></p>
+        <p style="font-size:0.85rem; color:#4a5568; margin-top:0;">全日 9:00~20:00 ご自由に時間帯をご記入ください<br>
+        <span style="color:#718096; font-size:0.8rem;">記入例：1/1 午後1時以降、平日の昼過ぎ、休日の午前以外</span></p>
         <div class="date-input-row"><span class="date-input-label">第1希望</span><input type="text" id="u_date1" class="date-input-field" placeholder="第1希望をご記入ください"></div>
         <div class="date-input-row"><span class="date-input-label">第2希望</span><input type="text" id="u_date2" class="date-input-field" placeholder="第2希望をご記入ください"></div>
         <div class="date-input-row"><span class="date-input-label">第3希望</span><input type="text" id="u_date3" class="date-input-field" placeholder="第3希望をご記入ください"></div>
         <p style="font-size:0.85rem; color:#333; margin:0; font-weight:bold;">※早朝作業、深夜作業に関しても相談承ります</p>
       </div>
+
       <div style="margin-bottom:25px;">
         <label class="input-label">エアイブキに相談したいこと</label>
         <textarea id="u_question" placeholder="例：当日の駐車スペースについて、土日の予約状況など"></textarea>
       </div>
+      
       <div class="photo-section">
         <div id="photo-sticker-group">
           <span class="photo-label">型番のシールを添付してください</span>
-          <p class="photo-desc">年製と型番号が書いてあるシールがエアコンの底面もしくは横面にあります。以下の例を参考に1枚写真を添付してください。</p>
+          <p class="photo-desc">年製と型番号が書いてあるシールがエアコンの底面もしくは横面にあります。以下の例を参考に写真を添付してください。</p>
           <div class="example-container">
             <span class="example-label">【型番写真の例】</span>
             <div class="example-flex">
@@ -191,9 +178,14 @@
               <div class="example-item"><img src="https://i.imgur.com/CPpdwKM.jpg" class="example-img"><div class="example-caption">②シールの内容（アップ）</div></div>
             </div>
           </div>
-          <input type="file" id="u_photo_sticker" accept="image/*">
+          <div id="sticker-input-container">
+            <input type="file" class="sticker-file" accept="image/*">
+          </div>
+          <button type="button" class="btn-photo-add" onclick="addFileInput('sticker-input-container', 'sticker-file')">＋ 写真枠を追加する</button>
         </div>
+        
         <label class="no-photo-check"><input type="checkbox" id="no-photo-toggle" onchange="togglePhotoInput(this.checked)"> 写真を添付できない</label>
+        
         <div id="no-photo-options" class="hidden" style="margin-top:20px; border-top: 1px dashed #cbd5e0; padding-top: 20px;">
           <div style="margin-bottom:18px;"><span class="photo-label">エアコンのメーカー</span><input type="text" id="u_maker" placeholder="例：ダイキン、パナソニック"></div>
           <div>
@@ -203,7 +195,10 @@
               <span class="example-label">【全体写真の例】</span>
               <div class="example-item" style="flex:0 0 100%;"><img src="https://i.imgur.com/kjCGrhj.jpg" class="example-img" style="height:220px;"><div class="example-caption">エアコンの全体像</div></div>
             </div>
-            <input type="file" id="u_photo_main" accept="image/*">
+            <div id="main-input-container">
+              <input type="file" class="main-file" accept="image/*">
+            </div>
+            <button type="button" class="btn-photo-add" onclick="addFileInput('main-input-container', 'main-file')">＋ 写真枠を追加する</button>
           </div>
         </div>
       </div>
@@ -233,8 +228,12 @@
   </div>
 
   <script>
+    // ★★★ 以下の2箇所をご自身のものに書き換えてください ★★★
     const LIFF_ID = "2008817045-BP7jc1xE";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbw_cjeK1s96jMMIhgQ9LA5SY_gX3MTkt0RWFwbV7Yq4CjUtVFjQyzIWDwUVqP7qXWm2PA/exec";
+
     let acCount = 1; let currentStep = 1; let globalEstimatedTime = 0; 
+
     const TYPES = { 'normal': { price: 14500, label: '通常タイプ', img: 'https://i.imgur.com/rnfPxwk.jpg' }, 'cleaning': { price: 21500, label: 'お掃除機能付き', img: 'https://i.imgur.com/lgveI9e.jpg' }, 'unknown': { price: 14500, label: 'わからない（通常タイプで仮計算）', img: '' } };
     const OPTIONS = { 'boukabi': { price: 3300, label: '防カビ加工' }, 'filter': { price: 2750, label: '抗菌フィルター' }, 'drain': { price: 5500, label: 'ドレンホース分解洗浄×ドレンパン洗浄' }, 'cap': { price: 2750, label: '防虫キャップ' }, 'outdoor': { price: 5500, label: '室外機洗浄' }, 'consult': { price: 0, label: 'オプションは相談して決めたい' } };
 
@@ -242,7 +241,7 @@
       history.replaceState({step: 1}, null, ""); 
       liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF Init Error: ", err));
     };
-    window.onpopstate = function(event) { if (event.state && event.state.step) showStep(event.state.step); };
+    window.onpopstate = function(event) { if (event.state && event.state.step) { showStep(event.state.step); } };
 
     function goToStep(s) { currentStep = s; history.pushState({step: s}, null, ""); showStep(s); }
     function showStep(s) { document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('hidden')); document.getElementById('step' + s).classList.remove('hidden'); window.scrollTo(0,0); }
@@ -280,6 +279,16 @@
       document.getElementById('ac-list').insertAdjacentHTML('beforeend', html);
     }
 
+    // ★ 写真入力枠を追加する関数
+    function addFileInput(containerId, className) {
+      const container = document.getElementById(containerId);
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.className = className;
+      input.accept = 'image/*';
+      container.appendChild(input);
+    }
+
     function togglePhotoInput(isNoPhoto) { document.getElementById('photo-sticker-group').classList.toggle('hidden', isNoPhoto); document.getElementById('no-photo-options').classList.toggle('hidden', !isNoPhoto); }
 
     let summaryTextForLine = ""; let htmlForConfirm = "";
@@ -288,42 +297,34 @@
       const units = document.querySelectorAll('.ac-item');
       units.forEach((el, i) => {
         const tKey = el.querySelector('.type-sel').value; const subBase = TYPES[tKey].price; const typeLabel = TYPES[tKey].label;
-        let isCleaning = (tKey === 'cleaning');
-        globalEstimatedTime += (i === 0) ? (isCleaning ? 3 : 2) : (isCleaning ? 2.5 : 1.5);
+        let isCleaning = (tKey === 'cleaning'); globalEstimatedTime += (i === 0) ? (isCleaning ? 3 : 2) : (isCleaning ? 2.5 : 1.5);
         let unitTotal = subBase; let unitOptionsHtml = ""; let unitOptionsLine = "";
         el.querySelectorAll('.option-checkbox:checked').forEach(chk => {
             const opt = OPTIONS[chk.value];
             if (chk.value === 'consult') {
               const consultText = el.querySelector('.consult-text').value.trim();
-              unitOptionsLine += consultText !== "" ? `  └ ${opt.label}\n      内容: ${consultText}\n` : `  └ ${opt.label}\n`;
-              unitOptionsHtml += `<p style="margin:4px 0 4px 12px; font-size: 0.9rem; color: #4a5568;">└ ${opt.label}${consultText !== "" ? `<br><span style="font-size:0.8rem;">内容: ${consultText}</span>`:""}</p>`;
+              let displayLabelHtml = opt.label;
+              if (consultText !== "") { displayLabelHtml += `<br><span style="color:#718096; font-size:0.8rem; margin-left:10px;">内容: ${consultText}</span>`; unitOptionsLine += `  └ ${opt.label}\n      内容: ${consultText}\n`; } else { unitOptionsLine += `  └ ${opt.label}\n`; }
+              unitOptionsHtml += `<p style="margin:4px 0 4px 12px; font-size: 0.9rem; color: #4a5568; line-height: 1.4;">└ ${displayLabelHtml}</p>`;
             } else if (opt.price > 0) {
-              unitTotal += opt.price;
-              unitOptionsHtml += `<p style="margin:4px 0 4px 12px; font-size: 0.9rem; color: #4a5568; display: flex; justify-content: space-between;"><span>└ ${opt.label}</span> <span>+${opt.price.toLocaleString()}円</span></p>`;
-              unitOptionsLine += `  └ ${opt.label}\n`;
-            } else {
-              unitOptionsHtml += `<p style="margin:4px 0 4px 12px; font-size: 0.9rem; color: #4a5568;">└ ${opt.label}</p>`;
-              unitOptionsLine += `  └ ${opt.label}\n`;
-            }
+              unitTotal += opt.price; unitOptionsHtml += `<p style="margin:4px 0 4px 12px; font-size: 0.9rem; color: #4a5568; display: flex; justify-content: space-between;"><span>└ ${opt.label}</span> <span>+${opt.price.toLocaleString()}円</span></p>`; unitOptionsLine += `  └ ${opt.label}\n`;
+            } else { unitOptionsHtml += `<p style="margin:4px 0 4px 12px; font-size: 0.9rem; color: #4a5568;">└ ${opt.label}</p>`; unitOptionsLine += `  └ ${opt.label}\n`; }
         });
         html += `<div style="margin-bottom: 12px; border-bottom: 1px solid #edf2f7; padding-bottom: 8px;"><p style="margin:8px 0; font-weight:bold; display: flex; justify-content: space-between;"><span>${i+1}台目: ${typeLabel}</span> <span>${subBase.toLocaleString()}円</span></p>${unitOptionsHtml}</div>`;
         summaryTextForLine += `${i+1}台目: ${typeLabel}\n${unitOptionsLine}`; total += unitTotal;
       });
-      if (units.length > 1) { const disc = (units.length - 1) * 2000; html += `<p style="color:#e53e3e; font-weight:bold; display: flex; justify-content: space-between;"><span>複数台割引 (2台目以降)</span> <span>-${disc.toLocaleString()}円</span></p>`; summaryTextForLine += `複数台割引: -${disc.toLocaleString()}円\n`; total -= disc; }
+      if (units.length > 1) { const disc = (units.length - 1) * 2000; html += `<p style="color:#e53e3e; padding-top:8px; margin-top:8px; font-weight:bold; display: flex; justify-content: space-between;"><span>複数台割引 (2台目以降)</span> <span>-${disc.toLocaleString()}円</span></p>`; summaryTextForLine += `複数台割引: -${disc.toLocaleString()}円\n`; total -= disc; }
       htmlForConfirm = html; document.getElementById('quote-list').innerHTML = html; document.getElementById('total-price').innerText = total.toLocaleString(); document.getElementById('display_time').innerText = globalEstimatedTime; goToStep(2);
     }
 
     function processToStep4() {
-      const ids = ['name','tel','addr','date1','date2','date3','question'];
-      const vals = ids.reduce((acc, id) => ({ ...acc, [id]: document.getElementById(`u_${id}`).value || (id.startsWith('date')?'未入力':'') }), {});
-      if (!vals.name || !vals.tel || !vals.addr) return alert("お名前、電話番号、住所を正しく入力してください。");
-      ids.forEach(id => { const el = document.getElementById(`c_${id}`); if(el) el.innerText = vals[id] || "なし"; });
+      const name = document.getElementById('u_name').value; const tel = document.getElementById('u_tel').value; const addr = document.getElementById('u_addr').value;
+      if (!name || !tel || !addr) return alert("お名前、電話番号、住所を正しく入力してください。");
+      ['name','tel','addr','date1','date2','date3','question'].forEach(id => { const el = document.getElementById(`c_${id}`); if(el) el.innerText = document.getElementById(`u_${id}`).value || "なし"; });
       document.getElementById('c_time').innerText = globalEstimatedTime; document.getElementById('c_quote_details').innerHTML = htmlForConfirm; document.getElementById('c_total').innerText = document.getElementById('total-price').innerText + "円"; goToStep(4);
     }
 
-    // ==========================================
-    // ここから下が大きく変更された送信処理です
-    // ==========================================
+    // ★ 自動送信と複数写真処理のコア
     async function onComplete() {
       const btn = document.getElementById('btn-submit');
       btn.innerText = "送信処理中...（そのままお待ちください）";
@@ -331,17 +332,12 @@
       btn.classList.remove('btn-pulse');
 
       try {
-        // ★ 1. LIFFからユーザーIDを取得する（これがないとLINEが送れない）
-        let userId = "2008817045-BP7jc1xE";
+        let userId = "";
         if (liff.isLoggedIn()) {
           const profile = await liff.getProfile();
           userId = profile.userId;
-        } else {
-          // LIFF外（普通のブラウザ）で開かれた時の保険
-          userId = "LIFF外アクセス"; 
         }
 
-        // 2. データの取得
         const name = document.getElementById('u_name').value;
         const tel = document.getElementById('u_tel').value;
         const addr = document.getElementById('u_addr').value;
@@ -349,53 +345,54 @@
         const date2 = document.getElementById('u_date2').value || '未入力';
         const date3 = document.getElementById('u_date3').value || '未入力';
         const question = document.getElementById('u_question').value;
-        const total = document.getElementById('total-price').innerText;
         const noPhoto = document.getElementById('no-photo-toggle').checked;
         const maker = document.getElementById('u_maker').value;
+        const total = document.getElementById('total-price').innerText;
 
-        // 3. 写真データの変換
-        let file = noPhoto ? document.getElementById('u_photo_main').files[0] : document.getElementById('u_photo_sticker').files[0];
-        let photoData = null; let photoFileName = null; let photoMimeType = null;
-        if (file) {
-          photoFileName = file.name; photoMimeType = file.type;
-          photoData = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result.split(',')[1]); 
-            reader.readAsDataURL(file);
-          });
+        // ★ 複数画像の処理
+        let photosArray = [];
+        const fileInputs = noPhoto ? document.querySelectorAll('.main-file') : document.querySelectorAll('.sticker-file');
+        
+        for (let input of fileInputs) {
+          if (input.files && input.files[0]) {
+            let file = input.files[0];
+            let base64 = await new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result.split(',')[1]); 
+              reader.readAsDataURL(file);
+            });
+            photosArray.push({
+              photoData: base64,
+              photoFileName: file.name,
+              photoMimeType: file.type
+            });
+          }
         }
 
-        // 4. LINEに送るメッセージ文面
         let message = `【見積もり・仮予約依頼】\n\n■お客様情報\nお名前：${name} 様\n電話番号：${tel}\nご住所：${addr}\n\n■ご希望日時\n第1希望：${date1}\n第2希望：${date2}\n第3希望：${date3}\n\n■見積内容\n${summaryTextForLine}--------------------\n合計：${total}円\n作業目安時間：約${globalEstimatedTime}時間\n\n■相談したいこと\n${question || "なし"}\n\n`;
-        if (noPhoto) { message += `メーカー：${maker}\n${file ? `※本体の写真はシステム経由で保存済みです。\n` : `※本体の写真は別途お送りください。\n`}`; } 
-        else { message += file ? `※型番の写真はシステム経由で保存済みです。\n` : `※型番の写真は別途お送りください。\n`; }
+        if (noPhoto) { message += `メーカー：${maker}\n${photosArray.length > 0 ? `※本体の写真はシステム経由で保存済みです。\n` : `※本体の写真は別途お送りください。\n`}`; } 
+        else { message += photosArray.length > 0 ? `※型番の写真はシステム経由で保存済みです。\n` : `※型番の写真は別途お送りください。\n`; }
         message += `--------------------\n※この内容はシステムより自動送信されています。`;
 
-        // 5. GASに送るデータの塊
         const payload = {
-          userId: userId, // 取得したユーザーID
-          messageText: message, // 組み立てたメッセージ
+          userId: userId,
+          messageText: message,
           name: name, tel: tel, addr: addr, date1: date1, date2: date2, date3: date3,
           quoteDetails: summaryTextForLine, question: question, totalPrice: total,
-          photoData: photoData, photoFileName: photoFileName, photoMimeType: photoMimeType
+          photos: photosArray // 配列で送信
         };
 
-        // ★★★★ 6. GASウェブアプリのURL（ここに貼り付けます！） ★★★★
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbw_cjeK1s96jMMIhgQ9LA5SY_gX3MTkt0RWFwbV7Yq4CjUtVFjQyzIWDwUVqP7qXWm2PA/exec"; 
-
-        // 7. GitHubからGASへデータを飛ばす（Fetch通信）
         const response = await fetch(GAS_URL, {
           method: "POST",
-          headers: { "Content-Type": "text/plain" }, // GASでCORSエラーを防ぐおまじない
+          headers: { "Content-Type": "text/plain" },
           body: JSON.stringify(payload)
         });
 
         const result = await response.json();
 
-        // 8. 成功・失敗の判定
         if (result.status === "success") {
           if (liff.isInClient()) {
-            liff.closeWindow(); // LINEアプリなら画面を閉じる
+            liff.closeWindow(); 
           } else {
             alert("送信が完了しました。タブを閉じてください。");
             btn.innerText = "送信完了";
